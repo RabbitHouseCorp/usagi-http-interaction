@@ -34,7 +34,7 @@ const usagiClient = new UsagiClient({
   // message
   // unexpected-response
   // upgrade
-  clientUusagiClientsagi.on('interaction', (interactionData) => {
+  usagiClient.on('interaction', (interactionData) => {
     // ... your code!
   })
 
