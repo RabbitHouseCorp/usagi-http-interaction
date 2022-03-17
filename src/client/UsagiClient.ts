@@ -24,6 +24,9 @@ export interface IClientDJS {
   user?: any;
 }
 
+/**
+ * @description Websocket Settings
+ */
 export interface IWebsocketClientOptions {
   /**
    * @description Allow the library to reconnect the API when there is a disconnect or a missed call or an API error occurs.
@@ -39,6 +42,9 @@ export interface IWebsocketClientOptions {
   maxReconnect: number; // -1 = Disabled
 }
 
+/**
+  * @description Settings to connect to API!
+  */
 export interface IClientOptions {
   /**
    * @description What kind of service do you want to work in the API if it is in secure mode (https://) or in non-secure mode (http://)
@@ -81,9 +87,21 @@ export interface IClientOptions {
 
 
 export class UsagiClient extends EventEmitter {
+  /**
+   * @description Settings to connect to API!
+   */
   public options: IClientOptions;
+  /**
+   * @description Websocket
+   */
   public ws?: WebSocket | null;
+  /**
+   * @description Statistics to have more report about the API connection.
+   */
   public stats: Statistics;
+  /**
+   * @description This is to maintain the connection don't mess with it.
+   */
   public updateLatency?: any;
   constructor(options: IClientOptions) {
     super();
@@ -102,8 +120,6 @@ export class UsagiClient extends EventEmitter {
       this.options.port = 'null'
     }
     if (this.options.publicKey == undefined) throw Error('ClientUsagi: You need to add field to put the public_key!');
-    if (this.options.client?.user?.id == undefined) throw Error('ClientUsagi: I couldn\'t find the bot ID!');
-    if (typeof this.options.client?.emit !== 'function') throw Error('ClientUsagi: This doesn\'t appear to be EventEmitter');
     this.stats = new Statistics(options.lengthLatency == undefined ? 3 : options.lengthLatency)
     this.updateLatency = null;
     this.listenerClass()
@@ -116,7 +132,8 @@ export class UsagiClient extends EventEmitter {
     }, 5 * 1000)
   }
   public reconnect() {
-
+    if (this.options.client?.user?.id == undefined) throw Error('ClientUsagi: I couldn\'t find the bot ID!');
+    if (typeof this.options.client?.emit !== 'function') throw Error('ClientUsagi: This doesn\'t appear to be EventEmitter');
     if (this.options.websocketOptions.reconnect !== undefined) {
       if (this.options.websocketOptions.reconnect == true) {
         const max = this.options.websocketOptions.maxReconnect == undefined ? 10 : this.options.websocketOptions.maxReconnect;
@@ -151,7 +168,9 @@ export class UsagiClient extends EventEmitter {
     })
     this.on('message', (message: Buffer) => {
       this.stats.dataLengthReceived += message.byteLength ?? 0
+      const time = Date.now()
       const json = decodeData(message)
+      this.emit('in', (message, time))
       if (json.type == 200) {
         this.stats.authorized = true;
         this.stats.updateLatency(Date.now())
@@ -162,18 +181,24 @@ export class UsagiClient extends EventEmitter {
   }
 
   public send(data: any) {
+    if (this.options.client?.user?.id == undefined) throw Error('ClientUsagi: I couldn\'t find the bot ID!');
+    if (typeof this.options.client?.emit !== 'function') throw Error('ClientUsagi: This doesn\'t appear to be EventEmitter');
     if (this.ws == null) return
     if (this.ws == undefined) return
     if (!(this.ws instanceof WebSocket)) return
     const message = encodeData(typeof data === 'string' ? JSON.stringify(data) : data)
     if (this.ws !== undefined) {
+      const time = Date.now()
       this.stats.dataLengthSend += message.byteLength
+      this.emit('out', (message, time))
       this.ws?.send(message)
     }
     return message
   }
 
   public connect() {
+    if (this.options.client?.user?.id == undefined) throw Error('ClientUsagi: I couldn\'t find the bot ID!');
+    if (typeof this.options.client?.emit !== 'function') throw Error('ClientUsagi: This doesn\'t appear to be EventEmitter');
     if (this.options.protocol == undefined) this.options.protocol = 'http://'
     const protocol = this.options.protocol?.replace('https://', 'wss://').replace('http://', 'ws://');
     this.options.ip = this.options.ip?.replace('https://', '').replace('http://', '')
