@@ -105,6 +105,30 @@ export class UsagiClient extends EventEmitter {
   public updateLatency?: any;
   constructor(options: IClientOptions) {
     super();
+    Object.defineProperty(options, "protocol", {
+      enumerable: false,
+      writable: true
+    });
+    Object.defineProperty(options, "ip", {
+      enumerable: false,
+      writable: true
+    });
+    Object.defineProperty(options, "port", {
+      enumerable: false,
+      writable: true
+    });
+    Object.defineProperty(options, "secret", {
+      enumerable: false,
+      writable: true
+    });
+    Object.defineProperty(options, "publicKey", {
+      enumerable: false,
+      writable: true
+    });
+    Object.defineProperty(options, "client", {
+      enumerable: false,
+      writable: true
+    });
     if (options == undefined) throw Error('ClientUsagi:  IClientOptions({\nprotocol=string;\nip=string;\nport?=string;\npublicKey=string;\nclient?=IClientDJS | IClientEris\n})'); this.options = options;
     if (this.options.protocol == undefined) throw Error('ClientUsagi: You need to add field to put the protocol type!');
     if (this.options.websocketOptions == undefined) throw Error('ClientUsagi: You need to add field to put the websocketOptions!');
@@ -202,7 +226,11 @@ export class UsagiClient extends EventEmitter {
     if (this.options.protocol == undefined) this.options.protocol = 'http://'
     const protocol = this.options.protocol?.replace('https://', 'wss://').replace('http://', 'ws://');
     this.options.ip = this.options.ip?.replace('https://', '').replace('http://', '')
-    const url = `${protocol}${this.options.ip}${this.options.port == undefined ? this.options.port : ''}/ws_interaction`;
+    let port = ''
+    if (typeof this.options?.port == 'number') {
+      port = `:${this.options.port}`
+    }
+    const url = `${protocol}${this.options.ip}${port}/ws_interaction`;
     if (url.startsWith('wss://')) {
       this.stats.modeSecure = true;
     }
