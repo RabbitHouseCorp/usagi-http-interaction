@@ -1,0 +1,30 @@
+{
+  "name": "usagi-http-interaction",
+  "description": "A library for interacting with Http Interaction API (API for receiving interactions.)",
+  "version": "1.0.0-stable",
+  "main": "./build/index.js",
+  "directories": {
+    "test": "test"
+  },
+  "dependencies": {
+    "@types/ws": "^8.5.3",
+    "ws": "^8.5.0"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "build": "tsc",
+    "postinstall": "tsc",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/RabbitHouseCorp/usagi-http-interaction.git"
+  },
+  "author": "RabbitHouseCorp",
+  "license": "MIT",
+  "types": "./build\\index.d.ts",
+  "bugs": {
+    "url": "https://github.com/RabbitHouseCorp/usagi-http-interaction/issues/new"
+  },
+  "homepage": "https://github.com/RabbitHouseCorp/usagi-http-interaction#readme"
+}
