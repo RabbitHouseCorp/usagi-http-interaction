@@ -129,7 +129,7 @@ export class UsagiClient extends EventEmitter {
     this.updateLatency = setTimeout(() => {
       this.stats.update = Date.now();
       this.send({ type: 89, message: '' });
-    }, 5 * 1000)
+    }, 25 * 1000)
   }
   public reconnect() {
     if (this.options.client?.user?.id == undefined) throw Error('ClientUsagi: I couldn\'t find the bot ID!');
