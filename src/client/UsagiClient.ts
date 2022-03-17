@@ -103,7 +103,7 @@ export class UsagiClient extends EventEmitter {
     }
     if (this.options.publicKey == undefined) throw Error('ClientUsagi: You need to add field to put the public_key!');
     if (this.options.client?.user?.id == undefined) throw Error('ClientUsagi: I couldn\'t find the bot ID!');
-    if (typeof this.options.client?.emit == 'function') throw Error('ClientUsagi: This doesn\'t appear to be EventEmitter');
+    if (typeof this.options.client?.emit !== 'function') throw Error('ClientUsagi: This doesn\'t appear to be EventEmitter');
     this.stats = new Statistics(options.lengthLatency == undefined ? 3 : options.lengthLatency)
     this.updateLatency = null;
     this.listenerClass()
