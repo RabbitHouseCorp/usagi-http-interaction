@@ -170,7 +170,7 @@ export class UsagiClient extends EventEmitter {
       this.stats.dataLengthReceived += message.byteLength ?? 0
       const time = Date.now()
       const json = decodeData(message)
-      this.emit('in', message, time)
+      this.emit('in', message, time, json)
       if (json.type == 200) {
         this.stats.authorized = true;
         this.stats.updateLatency(Date.now())
@@ -190,7 +190,7 @@ export class UsagiClient extends EventEmitter {
     if (this.ws !== undefined) {
       const time = Date.now()
       this.stats.dataLengthSend += message.byteLength
-      this.emit('out', message, time)
+      this.emit('out', message, time, data, typeof data)
       this.ws?.send(message)
     }
     return message
