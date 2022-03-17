@@ -1,4 +1,5 @@
-import { EventEmitter, WebSocket } from 'ws';
+import { EventEmitter } from 'events';
+import { WebSocket } from 'ws';
 import { decodeData, encodeData } from '../utils/MessageData';
 import { Statistics } from '../utils/Statistics';
 /**
