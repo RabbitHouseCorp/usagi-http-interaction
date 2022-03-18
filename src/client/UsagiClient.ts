@@ -181,7 +181,7 @@ export class UsagiClient extends EventEmitter {
       this.stats.end = Date.now();
       this.stats.update = Date.now();
       this.send({ type: 89, message: '' })
-      this.emit('connected', (this.stats.start, this.stats.end))
+      this.emit('connected', this.stats.start, this.stats.end)
     })
     this.on('close', (code, reason) => {
       this.stats.failedToConnect++;
