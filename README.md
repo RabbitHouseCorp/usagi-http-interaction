@@ -3,7 +3,7 @@ A library for interacting with Http Interaction API (API for receiving interacti
 
 
 ### Install
-Github: **`npm install RabbitHouseCorp/usagi-http-interaction#main`**.
+Github: **`npm install RabbitHouseCorp/usagi-http-interaction#main --save`**.
 
 It is necessary that you have Git **installed** on the **machine**.
 
