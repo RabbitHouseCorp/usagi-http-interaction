@@ -3,7 +3,7 @@ A library for interacting with Http Interaction API (API for receiving interacti
 
 
 ### Install
-Github: **`npm install RabbitHouseCorp/usagi-http-interaction#main --save`**.
+Github: **`npm install RabbitHouseCorp/usagi-http-interaction#main`**.
 
 It is necessary that you have Git **installed** on the **machine**.
 
@@ -34,7 +34,9 @@ const usagiClient = new UsagiClient({
   // message
   // unexpected-response
   // upgrade
-  usagiClient.on('interaction', (interactionData) => {
+  // interaction
+  // httpGateway
+  clientUusagiClientsagi.on('interaction', (interactionData) => {
     // ... your code!
   })
 
