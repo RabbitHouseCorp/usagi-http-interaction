@@ -2,7 +2,7 @@
   "name": "usagi-http-interaction",
   "description": "A library for interacting with Http Interaction API (API for receiving interactions.)",
   "version": "1.0.0-stable",
-  "main": "./build/index.js",
+  "main": "build/index.js",
   "directories": {
     "test": "test"
   },
